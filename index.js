@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
-const itemRoutes = require('./src/routes/itemRoutes');
+const routes = require('./src/routes/routes');
 const port = 3000;
 
 app.use(express.json());
@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use('/', itemRoutes);
+app.use('/', routes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
