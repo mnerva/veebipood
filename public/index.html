@@ -5,18 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Web Store</title>
     <link rel="stylesheet" href="style.css">
+    <script src="/index.js"></script>
 </head>
 <body>
     <header>
+        <p><a href="/">Skateboard</a></p>
         <h1>Welcome to Our Web Store</h1>
         <nav>
             <ul>
-                <li><a href="/checkout.html">Checkout</a></li>
+                <li><a href="/checkout">Checkout</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h2>Featured Products</h2>
+        <button onclick="scrollToItems()">shop now</button>
+        
+        <h2 id="items">Products</h2>
+
+        <button onclick="openSidebar('Item Name', 'Item Description')">View Item</button>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <h2 id="sidebar-title"></h2>
+            <p id="sidebar-description"></p>
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+        <p>--------------</p>
         <!-- Add featured product images and descriptions here -->
     </main>
     <footer>
