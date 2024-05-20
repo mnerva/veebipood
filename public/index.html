@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Web Store</title>
+    <title>Web Store</title>
     <link rel="stylesheet" href="style.css">
     <script src="/index.js"></script>
 </head>
 <body>
     <header>
-        <p><a href="/">Skateboard</a></p>
+        <div class="logo">
+            <a class="firmanimi" href="/">Plapla</a>
+            <a class="toode" href="/">Skateboard</a>
+        </div>
+        
         <h1>Welcome to Our Web Store</h1>
         <nav>
             <ul>
@@ -19,7 +23,7 @@
     </header>
     <main>
         <button onclick="scrollToItems()">shop now</button>
-        
+                
         <h2 id="items">Products</h2>
 
         <button onclick="openSidebar('Item Name', 'Item Description')">View Item</button>
