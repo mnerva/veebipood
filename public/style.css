@@ -13,3 +13,20 @@
 .sidebar.open {
     transform: translateX(0);
 }
+
+.logo {
+    text-align: left;
+    width: 100px;
+}
+
+.logo a {
+    color: black;
+}
+
+.firmanimi {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.toode {
+    font-family: 'Courier New', Courier, monospace;
+}
