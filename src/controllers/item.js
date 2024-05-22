@@ -1,5 +1,7 @@
 // connect to database
 const sequelize = require('../../db');
+const models = require('../../models')
+const OrderItem = require('../../models/orderitem');
 
 sequelize
     .authenticate()
@@ -9,12 +11,6 @@ sequelize
     .catch(error => {
         console.log(error)
     })
-
-// read model data for table representation
-const models = require('../../models')
-
-// Import the OrderItem model (assuming it's defined)
-const OrderItem = require('../../models/orderitem');
 
 // get all data from table
 const getAllItems = (req, res) => {
@@ -30,13 +26,14 @@ const getAllItems = (req, res) => {
 const getItemById = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const item = await Product.findById(itemId);
+        const item = await models.OrderItem.findByPk(itemId);
 
         if (!item) {
             return res.status(404).json({ message: 'Item not found' });
         }
 
-        res.render('item', { item });
+        // If the item is found, send it as a response
+        res.status(200).json({ item });
 
     } catch (error) {
         console.error(error);
@@ -49,8 +46,10 @@ const addItemToCart = async (req, res, next) => {
         const itemId = req.params.id;
         const { quantity } = req.body;
 
+        const price = 0
+
         // Create a new order item record in the orderItems table
-        const orderItem = new OrderItem({
+        const orderItem = await OrderItem.create({
             item_id: itemId,
             quantity: quantity,
             price: price
