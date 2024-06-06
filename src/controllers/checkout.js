@@ -1,23 +1,15 @@
 // connect to database
 const sequelize = require('../../db');
-// read model data for table representation
-const models = require('../../models')
 
-// Import the OrderItem model (assuming it's defined)
-const OrderItem = require('../../models/orderitem');
-// Import the Order model (assuming it's defined)
-const Order = require('../../models/order');
-// Import the Customer model (assuming it's defined)
-const Customer = require('../../models/customer');
-// Import the Item model (assuming it's defined)
-// const Item = require('../../models/item');
+// Import the models from the models directory
+const { OrderItem, Order, Customer, Item } = require('../../models');
 
 // get all data from table
 const getAllChosenItems = (req, res) => {
     try {
         const cartItems = req.session.cart || [];
+        console.log(cartItems);
         res.json(cartItems);
-        
     } catch (error) {
         // Handle errors
         console.error(error);
@@ -26,56 +18,64 @@ const getAllChosenItems = (req, res) => {
 };
 
 const processCheckout = async (req, res, next) => {
+    const transaction = await sequelize.transaction();
     try {
         const cartItems = req.session.cart || [];
+
+        // Debug logging to check incoming request body and session data
+        console.log('Request body:', req.body);
+        console.log('Cart items:', cartItems);
+
+        if (cartItems.length === 0) {
+            return res.status(400).json({ message: 'Cart is empty' });
+        }
 
         // Calculate total price
         let totalPrice = 0;
         for (const cartItem of cartItems) {
             totalPrice += cartItem.price * cartItem.quantity;
         }
+        console.log(totalPrice);
 
         // Create a customer record
-        const customer = new Customer({
+        const customer = await Customer.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
             phone: req.body.phone,
             address: req.body.address
-        });
-
-        // Save the customer record to the database
-        const savedCustomer = await customer.save();
+        }, { transaction });
 
         // Create an order record
-        const order = new Order({
-            customer_id: req.user.id, // Assuming you have user authentication and user ID is available in req.user.id
+        const order = await Order.create({
+            customerId: customer.id, // Assuming customer ID is available after saving customer
             totalPrice: totalPrice,
-            date: new Date(),
             status: 'pending' // Assuming the initial status of the order is 'pending'
-        });
-
-        // Save the order record to the database
-        const savedOrder = await order.save();
+        }, { transaction });
 
         // Save each cart item as an order item associated with the order
         for (const cartItem of cartItems) {
-            const orderItem = new OrderItem({
-                order_id: savedOrder._id,
-                item_id: cartItem.item_id,
+            await OrderItem.create({
+                orderId: order.id,
+                itemId: cartItem.itemId,
                 quantity: cartItem.quantity,
                 price: cartItem.price,
-            });
-            await orderItem.save();
+            }, { transaction });
         }
+
+        // Commit the transaction
+        await transaction.commit();
 
         // Clear the session cart after successful checkout
         req.session.cart = [];
 
         // Return a success message to the client
-        res.status(200).json({ message: 'Checkout successful', orderId: savedOrder._id });
-        
+        res.status(200).json({ message: 'Checkout successful', orderId: order.id });
+
     } catch (error) {
+        // Rollback the transaction in case of error
+        await transaction.rollback();
+
         // Handle errors
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
@@ -86,4 +86,4 @@ const processCheckout = async (req, res, next) => {
 module.exports = {
     getAllChosenItems,
     processCheckout
-}
+};

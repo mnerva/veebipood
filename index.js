@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./src/routes/routes');
 const Sequelize = require('sequelize');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3007;
 
 require('dotenv').config();
 
@@ -20,9 +20,10 @@ const sequelize = new Sequelize({
 
 // Use express-session middleware
 app.use(session({
-    secret: 'secretsecret', // Change this to a secure secret key
+    secret: 'secretsecret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: false }
 }));
 
 app.use(express.json());

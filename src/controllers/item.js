@@ -16,11 +16,11 @@ sequelize
 const getAllItems = (req, res) => {
     models.OrderItem.findAll()
         .then(orderItems => {
-            return res.status(200).json({ orderItems })
+            return res.status(200).json({ orderItems });
         })
         .catch(error => {
-            return res.status(500).send(error.message)
-        })
+            return res.status(500).send(error.message);
+        });
 };
 
 const getItemById = async (req, res, next) => {
@@ -32,9 +32,7 @@ const getItemById = async (req, res, next) => {
             return res.status(404).json({ message: 'Item not found' });
         }
 
-        // If the item is found, send it as a response
-        res.status(200).json({ item });
-
+        res.status(200).json(item);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
@@ -46,34 +44,66 @@ const addItemToCart = async (req, res, next) => {
         const itemId = req.params.id;
         const { quantity } = req.body;
 
-        const price = 0
+        const item = await models.Item.findByPk(itemId);
+        console.log(item)
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        const price = item.price;
+
+        const orderItem = {
+            id: item.id,
+            quantity: parseInt(quantity),
+            price: item.price
+        }
 
         // Create a new order item record in the orderItems table
-        const orderItem = await OrderItem.create({
-            item_id: itemId,
+        /*
+        const orderItem = await models.OrderItem.create({
+            id: item.id,
             quantity: quantity,
-            price: price
+            price: item.price
         });
-        // Save the new order item record to the database
-        await orderItem.save();
+        */
+
+        
 
         // Add the order item to the session cart
         req.session.cart = req.session.cart || [];
-        req.session.cart.push(orderItem);
+        if(req.session.cart.length > 0) {
+            req.session.cart.forEach(item => {
+                if(item.id === orderItem.id){
+                    item.quantity += 1
+                } else {
+                    req.session.cart.push(orderItem);
+                }
+            })
+        }  else {
+            req.session.cart.push(orderItem);
+        }
+        
 
-        // Return a response confirming that the item has been successfully added to the cart
+
+        
+        console.log(req.session.cart)
+
+        let totalPrice = 0
+        req.session.cart.forEach(item => {
+            totalPrice += item.price * item.quantity
+        });
+
+        console.log(totalPrice)
+
         res.status(200).json({ message: 'Item added to cart successfully' });
-
     } catch (error) {
-        // Handle errors
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
     }
 };
 
-// export controller functions
 module.exports = {
     getAllItems,
     getItemById,
     addItemToCart
-}
+};

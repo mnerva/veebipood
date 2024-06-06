@@ -6,7 +6,8 @@ const itemController = require('../controllers/item')
 
 router.get('/items', itemController.getAllItems)
 router.get('/item/:id', itemController.getItemById)
-router.post('item/:id', itemController.addItemToCart)
+router.post('/item/:id', itemController.addItemToCart)
+
 router.get('/cart', checkoutController.getAllChosenItems)
 router.post('/cart', checkoutController.processCheckout)
 
