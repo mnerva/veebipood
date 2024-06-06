@@ -24,9 +24,11 @@
     <main>
         <button onclick="scrollToItems()">shop now</button>
                 
-        <h2 id="items">Products</h2>
-
-        <button onclick="openSidebar('Item Name', 'Item Description')">View Item</button>
+        <div id="items" style="margin-top: 1000px;">
+            <h2>Products</h2>
+            <button onclick="openSidebar(1, 'Item Name', 'Item Description')">View Item 1</button>
+            <button onclick="openSidebar(2, 'Item Name', 'Item Description')">View Item 2</button>
+        </div>
 
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
