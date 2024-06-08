@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,37 +8,35 @@
     <link rel="stylesheet" href="style.css">
     <script src="/index.js"></script>
 </head>
+
 <body>
     <header>
-        <div class="logo">
-            <a class="firmanimi" href="/">Plapla</a>
-            <a class="toode" href="/">Skateboard</a>
+        <div class="navigation">
+            <div class="logo">
+                <a href="/">Logo</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/">Home page</a>
+                <a href="/items">Shop</a>
+                <a href="./checkout.html">Cart</a>
+            </div>
         </div>
-        
-        <h1>Welcome to Our Web Store</h1>
-        <nav>
-            <ul>
-                <li><a href="/checkout">Checkout</a></li>
-            </ul>
-        </nav>
     </header>
     <main>
-        <button onclick="scrollToItems()">shop now</button>
-                
-        <div id="items" style="margin-top: 1000px;">
-            <h2>Products</h2>
-            <button onclick="openSidebar(1, 'Item Name', 'Item Description')">View Item 1</button>
-            <button onclick="openSidebar(2, 'Item Name', 'Item Description')">View Item 2</button>
+        <div id="home-section">
+            <img src="https://gallerix.ee/gallery/5/8/1/1/37747-800.jpg">
+            <button onclick="scrollToItems()">Go To Our Store</button>
         </div>
 
-        <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
+        <div class="sidebar" id="sidebar">
+            <button id="close-sidebar-button">&times;</button>
+            <img id="sidebar-picture">
             <h2 id="sidebar-title"></h2>
             <p id="sidebar-description"></p>
-            <button onclick="addToCart()">Add to Cart</button>
+            <p id="sidebar-price"></p>
         </div>
-        <p>--------------</p>
-        <!-- Add featured product images and descriptions here -->
+
+        <div id="items-container"></div>
     </main>
     <footer>
         <p>&copy; 2024 Simple Web Store. All rights reserved.</p>
