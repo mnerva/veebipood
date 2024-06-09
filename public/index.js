@@ -25,13 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     image.src = item.imageURL;
                     itemDiv.appendChild(image);
 
-                    const nameDiv = document.createElement('div');
-                    nameDiv.innerText = 'Name: ' + item.item_name;
-                    itemDiv.appendChild(nameDiv);
+                    const nameHeading = document.createElement('h2');
+                    nameHeading.innerText = item.item_name;
+                    itemDiv.appendChild(nameHeading);
 
                     const priceDiv = document.createElement('div');
                     priceDiv.innerText = 'Price: $' + item.price;
+                    priceDiv.classList.add('price');
                     itemDiv.appendChild(priceDiv);
+
+                    const addToCartButton = document.createElement('button');
+                    addToCartButton.innerText = 'Add to Cart';
+                    addToCartButton.classList.add('add-to-cart-button');
+                    addToCartButton.addEventListener('click', function () {
+                        addToCart(item);
+                    });
+                    itemDiv.appendChild(addToCartButton);
 
                     // sidebar event listener
                     itemDiv.addEventListener('click', function () {
@@ -55,12 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const sidebarTitle = document.getElementById('sidebar-title');
         const sidebarDescription = document.getElementById('sidebar-description');
         const sidebarPrice = document.getElementById('sidebar-price');
+        const sidebarQuantity = document.getElementById('sidebar-quantity');
 
         // sidebar content
         sidebarPicture.src = item.imageURL;
         sidebarTitle.textContent = 'Name: ' + item.item_name;
         sidebarDescription.textContent = 'Description: ' + item.description;
         sidebarPrice.textContent = 'Price: $' + item.price;
+        sidebarQuantity.textContent = 'Quantity: ' + item.quantity;
 
         sidebar.classList.add('open');
     }
@@ -81,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeSidebar = closeSidebar;
 });
 
-/*
+
 async function addToCart() {
     try {
         const sidebar = document.getElementById('sidebar');
@@ -108,4 +119,3 @@ async function addToCart() {
         // Handle error appropriately (e.g., show error message to user)
     }
 }
-*/

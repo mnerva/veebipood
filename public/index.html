@@ -23,9 +23,12 @@
         </div>
     </header>
     <main>
-        <div id="home-section">
-            <img src="https://gallerix.ee/gallery/5/8/1/1/37747-800.jpg">
-            <button onclick="scrollToItems()">Go To Our Store</button>
+        <div class="around-home-section">
+            <div class="home-section">
+                <img
+                    src="https://s3-alpha-sig.figma.com/img/add8/07a5/71991fc1122efbcdc86b1295e29df2c8?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OXX4SD1uUbQmMqK2JXi9VSn24egLYlkegUzVHwj9bLXnsARX4iuAeC3cv4Dtjd3K9JvG8psO64p6VUI9DhRGG6EtfxytcXkcB~3pYqs6sYIFz0PHOn~FWJqOESBktnBaaeKwGa8RgUgob4ezSIjq~MCUj~rTe6bafJXwbJyHnhHXT9xeJBXgPsjIThhvq83p4A8TQAkwRXrvZjYAlPJLAuDFdaVS9HMCQU4puo6t5eRm~Uq1ZO~Uj2hCHYy2Q3OYZvhNC-3W00d4kL9lmcpxzgzNlngFTPVDPacJAatPHkf7uYyrL~0NQp6bYSf1oIl5qxb~5aMLN9v~R1KyYXgmYA__">
+                <button onclick="scrollToItems()">Go To Our Store</button>
+            </div>
         </div>
 
         <div class="sidebar" id="sidebar">
@@ -34,12 +37,14 @@
             <h2 id="sidebar-title"></h2>
             <p id="sidebar-description"></p>
             <p id="sidebar-price"></p>
+            <p id="sidebar-quantity"></p>
         </div>
 
-        <div id="items-container"></div>
+        <div id="items-container" class="items-container"></div>
     </main>
     <footer>
         <p>&copy; 2024 Simple Web Store. All rights reserved.</p>
     </footer>
 </body>
+
 </html>
