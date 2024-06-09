@@ -11,17 +11,16 @@ html {
     align-items: center;
 }
 
-header {
-    background-color: #BE5C24;
-    padding: 10px 20px;
-    width: 100%;
-}
-
 .navigation {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #BE5C24;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
+    padding: 1.5vw 15vw;
 }
 
 .logo a {
@@ -51,7 +50,7 @@ header {
 }
 
 .around-home-section {
-    padding: 20px;
+    padding: 15vh;
 } 
 
 .home-section {
@@ -161,11 +160,11 @@ header {
 }
 
 footer {
-    position: static;
-    bottom: 0;
+    position: fixed;
     left: 0;
+    bottom: 0;
     width: 100%;
     background-color: #BE5C24;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px;
 }

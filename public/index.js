@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // sidebar content
         sidebarPicture.src = item.imageURL;
-        sidebarTitle.textContent = 'Name: ' + item.item_name;
-        sidebarDescription.textContent = 'Description: ' + item.description;
-        sidebarPrice.textContent = 'Price: $' + item.price;
-        sidebarQuantity.textContent = 'Quantity: ' + item.quantity;
+        sidebarTitle.textContent = item.item_name;
+        sidebarDescription.textContent = item.description;
+        sidebarPrice.textContent = item.price + '$';
+        sidebarQuantity.textContent = item.quantity + ' units left in stock.';
 
         sidebar.classList.add('open');
     }
