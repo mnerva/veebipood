@@ -43,7 +43,7 @@ html {
 .nav-buttons a:hover {
     background-color: #F2752E;
     color: #000;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 .around-home-section {
