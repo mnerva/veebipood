@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: #635D59;
+        }
+
+        .navigation {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background-color: #312E2C;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vw 15vw;
+        }
+
+        .logo a {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #635D59;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .confirmation-text {
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .confirmation-text h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .home-button {
+            background-color: #312E2C;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-align: center;
+            position: absolute;
+            bottom: max(40%);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .home-button a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px 20px;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #312E2C;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <div class="navigation">
@@ -19,15 +113,16 @@
             </div>
         </div>
     </header>
-    <main>
-        <nav>
-            <ul>
-                <li><a href="/">Go back to home page -> </a></li>
-            </ul>
-        </nav>
-    </main>
+    <div class="confirmation-text">
+        <h1>Congratulations!</h1>
+        <h1>Your order is on your way!</h1>
+    </div>
+    <div class="home-button">
+        <a href="/">Go Back To Home Page</a>
+    </div>
     <footer>
         <p>&copy; 2024 Simple Web Store. All rights reserved.</p>
     </footer>
 </body>
+
 </html>
