@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const checkoutController = require('../controllers/checkout')
-const itemController = require('../controllers/item')
+const itemController = require('../controllers/item');
+const item = require('../../models/item');
 
 router.get('/items', itemController.getAllItems)
 router.get('/item/:id', itemController.getItemById)

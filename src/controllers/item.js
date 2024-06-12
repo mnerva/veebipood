@@ -68,25 +68,25 @@ const addItemToCart = async (req, res, next) => {
         });
         */
 
-        
+
 
         // Add the order item to the session cart
         req.session.cart = req.session.cart || [];
-        if(req.session.cart.length > 0) {
+        if (req.session.cart.length > 0) {
             req.session.cart.forEach(item => {
-                if(item.id === orderItem.id){
+                if (item.id === orderItem.id) {
                     item.quantity += 1
                 } else {
                     req.session.cart.push(orderItem);
                 }
             })
-        }  else {
+        } else {
             req.session.cart.push(orderItem);
         }
-        
 
 
-        
+
+
         console.log(req.session.cart)
 
         let totalPrice = 0
