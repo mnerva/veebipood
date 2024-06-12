@@ -39,6 +39,11 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
+app.get('/checkout', (req, res) => {
+    const orderId = req.session.orderId;
+    res.render('checkout', { orderId });
+});
+
 module.exports = app;
 
 // Start the server

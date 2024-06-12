@@ -22,10 +22,6 @@ const processCheckout = async (req, res, next) => {
     try {
         const cartItems = req.session.cart || [];
 
-        // Debug logging to check incoming request body and session data
-        console.log('Request body:', req.body);
-        console.log('Cart items:', cartItems);
-
         if (cartItems.length === 0) {
             return res.status(400).json({ message: 'Cart is empty' });
         }
@@ -48,9 +44,9 @@ const processCheckout = async (req, res, next) => {
 
         // Create an order record
         const order = await Order.create({
-            customerId: customer.id, // Assuming customer ID is available after saving customer
+            customerId: customer.id,
             totalPrice: totalPrice,
-            status: 'pending' // Assuming the initial status of the order is 'pending'
+            status: 'finished'
         }, { transaction });
 
         // Save each cart item as an order item associated with the order
@@ -82,8 +78,42 @@ const processCheckout = async (req, res, next) => {
     }
 };
 
+const updateOrderStatus = async (req, res, next) => {
+    const transaction = await sequelize.transaction();
+    try {
+        const orderId = req.body.orderId;
+
+        // Find the order by ID
+        const order = await Order.findByPk(orderId);
+        console.log(order)
+        console.log(orderId)
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Update the status of the order
+        order.status = 'finished';
+        await order.save({ transaction });
+
+        // Commit the transaction
+        await transaction.commit();
+
+        // Return a success message
+        res.status(200).json({ message: 'Order status updated to finished' });
+
+    } catch (error) {
+        // Rollback the transaction in case of error
+        await transaction.rollback();
+
+        // Handle errors
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
 // export controller functions
 module.exports = {
     getAllChosenItems,
-    processCheckout
+    processCheckout,
+    updateOrderStatus
 };

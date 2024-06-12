@@ -57,18 +57,7 @@ const addItemToCart = async (req, res, next) => {
             id: item.id,
             quantity: parseInt(quantity),
             price: item.price
-        }
-
-        // Create a new order item record in the orderItems table
-        /*
-        const orderItem = await models.OrderItem.create({
-            id: item.id,
-            quantity: quantity,
-            price: item.price
-        });
-        */
-
-        
+        }      
 
         // Add the order item to the session cart
         req.session.cart = req.session.cart || [];

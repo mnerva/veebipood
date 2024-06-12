@@ -44,7 +44,56 @@ document.addEventListener('DOMContentLoaded', () => {
             closeSidebar();
         } catch (error) {
             console.error('Error adding item to cart:', error);
-            // Handle error appropriately (e.g., show error message to user)
+            console.log(error)
+        }
+    }
+
+    async function processCheckout() {
+        try {
+            // Send a request
+            const response = await fetch(`/cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'checkout' })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to finish the checkout');
+            }
+
+            const result = await response.json()
+            console.log('Checkout successful:', result)
+
+        } catch (error) {
+            console.error('Error finishing the process:', error);
+            console.log(error)
+        }
+    }
+
+    async function updateOrderStatus() {
+        const orderId = document.getElementById('orderId').value;
+
+        try {
+            const response = await fetch('/update-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orderId })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log(result.message);
+                // Optionally, handle success (e.g., display a success message or redirect)
+            } else {
+                const error = await response.json();
+                console.error('Error updating order status:', error.message);
+            }
+        } catch (error) {
+            console.error('Error updating order status:', error);
         }
     }
 
@@ -52,4 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openSidebar = openSidebar;
     window.closeSidebar = closeSidebar;
     window.addToCart = addToCart;
+    window.updateOrderStatus = updateOrderStatus;
+    window.processCheckout = processCheckout;
 });

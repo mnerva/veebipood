@@ -11,6 +11,8 @@ router.post('/item/:id', itemController.addItemToCart)
 router.get('/cart', checkoutController.getAllChosenItems)
 router.post('/cart', checkoutController.processCheckout)
 
+router.post('/update-status', checkoutController.updateOrderStatus);
+
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public', 'index.html'));
 });
