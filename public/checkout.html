@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Checkout</title>
+   <link rel="stylesheet" href="style.css">
+   <script src="/index.js"></script>
     <style>
         * {
             margin: 0;
@@ -164,7 +166,7 @@
                 </div>
             </form>
         </div>
-        <button class="purchase-button"><a href="/confirmation">Purchase</a></button>
+        <button onclick="processCheckout()"><a href="/confirmation">Purchase</a></button>
         <button class="back-to-shop-button"><a href="/">Back to Shop</a></button>
     </main>
     <footer>

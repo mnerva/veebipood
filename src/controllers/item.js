@@ -53,11 +53,39 @@ const addItemToCart = async (req, res, next) => {
             return res.status(404).json({ message: 'Item not found' });
         }
 
-        const orderItem = await models.OrderItem.create({
-            itemId: itemId,
-            quantity: quantity,
-            orderId: orderId,
+        const price = item.price;
+
+        const orderItem = {
+            id: item.id,
+            quantity: parseInt(quantity),
+            price: item.price
+        }
+
+        // Add the order item to the session cart
+        req.session.cart = req.session.cart || [];
+        if(req.session.cart.length > 0) {
+            req.session.cart.forEach(item => {
+                if(item.id === orderItem.id){
+                    item.quantity += 1
+                } else {
+                    req.session.cart.push(orderItem);
+                }
+            })
+        }  else {
+            req.session.cart.push(orderItem);
+        }
+        
+
+
+        
+        console.log(req.session.cart)
+
+        let totalPrice = 0
+        req.session.cart.forEach(item => {
+            totalPrice += item.price * item.quantity
         });
+
+        console.log(totalPrice)
 
         res.status(200).json({ message: 'Item added to cart successfully', orderItem });
     } catch (error) {

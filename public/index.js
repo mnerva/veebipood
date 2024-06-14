@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemSection = document.getElementById('items-container');
         itemSection.scrollIntoView({ behavior: 'smooth' });
     }
-
     // fetch and display items
     function fetchAndDisplayItems() {
         fetch('/items')
@@ -54,12 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // sidebar open
     function openSidebar(item) {
         console.log('Received item:', item);
-
         const sidebar = document.getElementById('sidebar');
         const sidebarId = document.getElementById('sidebar-id');
         const sidebarPicture = document.getElementById('sidebar-picture');
         const sidebarTitle = document.getElementById('sidebar-title');
         const sidebarDescription = document.getElementById('sidebar-description');
+ 
+        // code from half branch in case need to use
+        sidebar.dataset.itemId = itemId;
+        sidebarTitle.textContent = itemName;
+        sidebarDescription.textContent = itemDescription;
+        // this part of the code from half branch ended
+ 
         const sidebarPrice = document.getElementById('sidebar-price');
         const sidebarQuantity = document.getElementById('sidebar-quantity');
         const addToCartButton = document.getElementById('sidebar-add-to-cart-button');
@@ -92,37 +97,64 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebar.classList.remove('open');
     }
 
-    
-async function addToCart() {
-    try {
-        const sidebar = document.getElementById('sidebar');
-        const itemId = sidebar.dataset.itemId;
-        const quantity = 1; // Set the quantity as needed
-
-        // Send a request to add the item to the cart
-        const addToCartResponse = await fetch(`/item/${itemId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ quantity: quantity })
-        });
-
-        if (!addToCartResponse.ok) {
-            throw new Error('Failed to add item to cart');
-        }
-
-        // Close the sidebar after adding the item to the cart
-        closeSidebar();
-    } catch (error) {
-        console.error('Error adding item to cart:', error);
-        // Handle error appropriately (e.g., show error message to user)
+    async function addToCart() {
+        try {
+            const sidebar = document.getElementById('sidebar');
+            const itemId = sidebar.dataset.itemId;
+            const quantity = 1; // Set the quantity as needed
+ 
+ 
+            // Send a request to add the item to the cart
+            const addToCartResponse = await fetch(`/item/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity: quantity })
+            });
+ 
+            if (!addToCartResponse.ok) {
+                throw new Error('Failed to add item to cart');
+            }
+ 
+            // Close the sidebar after adding the item to the cart
+            closeSidebar();
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            console.log(error)
     }
-}
+      
+    async function processCheckout() {
+        try {
+            // Send a request
+            const response = await fetch(`/cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'checkout' })
+            });
+ 
+ 
+            if (!response.ok) {
+                throw new Error('Failed to finish the checkout');
+            }
+ 
+ 
+            const result = await response.json()
+            console.log('Checkout successful:', result)
+ 
+ 
+        } catch (error) {
+            console.error('Error finishing the process:', error);
+            console.log(error)
+        }
+    }
 
     // export
     window.scrollToItems = scrollToItems;
     window.onload = fetchAndDisplayItems;
     window.closeSidebar = closeSidebar;
     window.addToCart = addToCart;
+    window.processCheckout = processCheckout;
 });
