@@ -1,32 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Checkout</title>
    <link rel="stylesheet" href="style.css">
    <script src="/index.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: #A1935A;
+        }
+
+        .navigation {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background-color: #6D643D;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vw 15vw;
+        }
+
+        .logo a {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #A1935A;
+            color: white;
+            border-radius: 10px;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #6D643D;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-between;
+            padding: 100px 15vw;
+            flex-wrap: wrap;
+        }
+
+        .products-column,
+        .payment-column {
+            flex-basis: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: calc(50% - 10px);
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 25px;
+        }
+
+        .purchase-button {
+            background-color: white;
+        }
+
+        .back-to-shop-button {
+            background-color: transparent;
+            border: 1px solid black;
+        }
+
+
+        form {
+            font-size: 20px;
+        }
+
+        form div {
+            margin-bottom: 2vh;
+            display: flex;
+            align-items: center;
+        }
+
+        form label {
+            flex-basis: 25%;
+        }
+
+        form input[type="email"],
+        form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
+
 <body>
-   <header>
-       <div class="logo">
-           <a class="firmanimi" href="/">Plapla</a>
-           <a class="toode" href="/">Skateboard</a>
-       </div>
-       <h1>Checkout</h1>
-       <nav>
-           <ul>
-               <li><a href="/">Home</a></li>
-           </ul>
-       </nav>
-   </header>
-   <main>
-       <h2>Products in cart</h2>
-       <!-- Add featured product images and descriptions here -->
-       <button onclick="processCheckout()"><a href="/confirmation">Purchase</a></button>
-   </main>
-   <footer>
-       <p>&copy; 2024 Simple Web Store. All rights reserved.</p>
-   </footer>
+    <header>
+        <div class="navigation">
+            <div class="logo">
+                <a href="/">Logo</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/">Home page</a>
+                <a href="/#shop">Shop</a>
+                <a href="./checkout.html">Cart</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="products-column">
+            <h2>Products in cart</h2>
+            <!-- Add featured product images and descriptions here -->
+        </div>
+        <div class="payment-column">
+            <h2>Payment Details</h2>
+            <form>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
+                </div>
+                <div>
+                    <label for="card">Card</label>
+                    <input type="text" name="card" id="card" placeholder="1234 5678 9012 3456" required
+                        pattern="\d{4} \d{4} \d{4} \d{4}">
+                </div>
+                <div>
+                    <label for="expiry">MM/YY</label>
+                    <input type="text" name="expiry" id="expiry" placeholder="MM/YY" required pattern="\d{2}/\d{2}">
+                </div>
+                <div>
+                    <label for="cvc">CVC</label>
+                    <input type="text" name="cvc" id="cvc" placeholder="123" required pattern="\d{3}">
+                </div>
+            </form>
+        </div>
+        <button onclick="processCheckout()"><a href="/confirmation">Purchase</a></button>
+        <button class="back-to-shop-button"><a href="/">Back to Shop</a></button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Simple Web Store. All rights reserved.</p>
+    </footer>
 </body>
+
 </html>

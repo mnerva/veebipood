@@ -43,10 +43,12 @@ const getItemById = async (req, res, next) => {
 const addItemToCart = async (req, res, next) => {
     try {
         const itemId = req.params.id;
-        const { quantity } = req.body;
+        const { quantity, orderId } = req.body;
+
+        console.log('Received orderId:', orderId);
 
         const item = await models.Item.findByPk(itemId);
-        console.log(item)
+
         if (!item) {
             return res.status(404).json({ message: 'Item not found' });
         }
@@ -85,7 +87,7 @@ const addItemToCart = async (req, res, next) => {
 
         console.log(totalPrice)
 
-        res.status(200).json({ message: 'Item added to cart successfully' });
+        res.status(200).json({ message: 'Item added to cart successfully', orderItem });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
